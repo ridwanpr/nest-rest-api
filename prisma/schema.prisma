@@ -1,0 +1,45 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  username String     @id @db.VarChar(100)
+  password String     @db.VarChar(100)
+  name     String     @db.VarChar(100)
+  token    String?    @db.VarChar(200)
+  contacts contacts[]
+
+  @@map("users")
+}
+
+model Address {
+  id          Int      @id @default(autoincrement())
+  street      String?  @db.VarChar(255)
+  city        String?  @db.VarChar(100)
+  province    String?  @db.VarChar(100)
+  country     String   @db.VarChar(100)
+  postal_code String   @db.VarChar(10)
+  contact_id  Int
+  contacts    contacts @relation(fields: [contact_id], references: [id])
+
+  @@index([contact_id], map: "Address_contact_id_fkey")
+}
+
+model contacts {
+  id         Int       @id @default(autoincrement())
+  first_name String    @db.VarChar(100)
+  last_name  String?   @db.VarChar(100)
+  email      String?   @db.VarChar(100)
+  phone      String?   @db.VarChar(20)
+  username   String    @db.VarChar(100)
+  Address    Address[]
+  users      User      @relation(fields: [username], references: [username])
+
+  @@index([username], map: "contacts_username_fkey")
+}
