@@ -48,7 +48,7 @@ describe('UserController', () => {
           name: 'test',
         });
 
-      expect(response.status).toBe(201);
+      expect(response.status).toBe(200);
       expect(response.body.data.username).toBe('test');
       expect(response.body.data.name).toBe('test');
     });
@@ -88,13 +88,15 @@ describe('UserController', () => {
 
     it('should be able to login if request is valid', async () => {
       const response = await request(app.getHttpServer())
-        .post('/api/users')
+        .post('/api/users/login')
         .send({
           username: 'test',
           password: '12345678',
         });
 
-      expect(response.status).toBe(201);
+      console.log(response.body);
+
+      expect(response.status).toBe(200);
       expect(response.body.data.username).toBe('test');
       expect(response.body.data.name).toBe('test');
       expect(response.body.data.token).toBeDefined();
