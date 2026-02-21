@@ -70,28 +70,23 @@
       "ts"
     ],
     "rootDir": ".",
+    "roots": [
+      "<rootDir>/test"
+    ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": [
         "ts-jest",
         {
           "useESM": true,
-          "tsconfig": {
-            "module": "esnext",
-            "moduleResolution": "node",
-            "resolvePackageJsonExports": false
-          }
+          "tsconfig": "<rootDir>/tsconfig.test.json"
         }
       ]
     },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
     "moduleNameMapper": {
       "^src/(.*)$": "<rootDir>/src/$1",
       "^(\\.{1,2}/.+)\\.js$": "$1"
     },
-    "coverageDirectory": "./coverage",
     "testEnvironment": "node"
   }
 }
